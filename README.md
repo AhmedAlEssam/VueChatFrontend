@@ -15,7 +15,7 @@ git clone https://github.com/AhmedAlEssam/VueChatFrontend.git
 
 2. Navigate to the project directory:
 ```
-cd Vue_Chat_frontend
+cd VueChatFrontend
 ```
 
 3. Install the project dependencies using npm:
