@@ -10,7 +10,7 @@ To use this project, please follow the steps below:
 1. Clone the repository to your local machine: 
 
 ```
-git clone github.com/AhmedAlEssam/VueChatFrontend.git
+git clone https://github.com/AhmedAlEssam/VueChatFrontend.git
 ```
 
 2. Navigate to the project directory:
