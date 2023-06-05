@@ -65,4 +65,4 @@ Feel free to explore and modify the codebase to practice and experiment with dif
 If you wish to contribute to this project, please fork the repository, make your changes, and submit a pull request. Your contributions are greatly appreciated!
 
 ## License
-This project is licensed under the [MIT License](/License). Feel free to use and modify the codebase according to the terms of the license
+This project is licensed under the [MIT License](/LICENSE). Feel free to use and modify the codebase according to the terms of the license
