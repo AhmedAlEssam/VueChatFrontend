@@ -69,11 +69,12 @@ const signin = async () => {
 
     try {
         const { data } = await http.post('/auth/login', {
-
+            
             email: s_i_email.value,
             password: s_i_password.value
-        })
+        }) 
         localStorage.setItem("accessToken", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
 
         router.push({ name: "home" });
 
@@ -108,7 +109,7 @@ onMounted(() => {
         <div id="login-modal"
             class="select-none w-[900px] h-[600px] relative border-0 border-solid border-red-700 rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 ease-in-out transform bg-blue-600 ">
             <div id="signin-front"
-                class="pt-20 bg-white absolute h-full z-10 transition-all duration-1000 ease-in-out text-center left-0 w-[60%] overflow-hidden"
+                class="pt-20 bg-white absolute h-full z-10 transition-all duration-1000 ease-in-out text-center left-0   overflow-hidden"
                 :class="{ 'w-[60%] ': isLogin, 'w-0': !isLogin }">
                 <div class="w-[540px] relative transition-all duration-1000 ease-in-out right-0"
                     :class="{ 'right-[0%] ': isLogin, 'right-[-1080px]': !isLogin }">
@@ -135,7 +136,7 @@ onMounted(() => {
                             <span class="block  text-red-500 font-bold" v-text="`${errorMsg}${' .'}`" role="alert"
                                 :class="{ 'opacity-0': !errorMsg, 'opacity-100': errorMsg }" />
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                                <input class="form-check-input m-1" type="checkbox" name="remember" id="remember">
                                 <label class="form-check-label" for="remember">Remember Me</label>
                             </div>
                             <a href="/forget_password" class=" text-blue-600">Forget your password?</a>

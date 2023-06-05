@@ -39,19 +39,17 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import http from "@/helpers/http";
 const router = useRouter();
 const logout = async () => {
   let storedEmail = JSON.parse(localStorage.getItem("user"));
   storedEmail = storedEmail.email;
-  try {
-    const { data } = await http.post('/auth/logout', { email: storedEmail }).then((res) => {
-      console.log(res);
-    });
-    localStorage.setItem("accessToken", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
-    router.push({ name: "home" });
+  try {  await http.post('/auth/logout', { email: storedEmail }).then((res) => {
+      console.log(res.data);
+    }); 
   } catch (e) {
     console.log(e);
+    // localStorage.clear();
     // if(e.response.data.message)
     // errorMsg.value = e.response.data.message;
   }
