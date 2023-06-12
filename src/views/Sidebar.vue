@@ -1,7 +1,30 @@
+<script setup>
+import ChatList from '@/views/Chatlist.vue'
+import ContactsList from '@/views/ContactsList.vue'
+import { ref } from 'vue';
+
+const props = defineProps({
+    conversations: Object,
+    index: Number,
+    users: Object,
+    me: Object,
+})
+
+const isNewChatOpen = ref(false);
+const Index = ref(100);
+const selectedIndex = ref(1000);
+const selection = (conv, i) => {
+    selectedIndex.value = i;
+    emit('select', conv, i);
+    Index.value = i;
+}
+
+const emit = defineEmits(['select'])
+</script>
 <template>
     <div id="chat-head-sidebar-with-search" class="h-fill basis-1/3 rounded-[3rem] m-5 overflow-hidden">
-        <div id="newchat-searchbar" class="bg-white flex flex-col rounded-[3rem] rounded-bl-none  overflow-hidden pb-6" :class="{'rounded-br-none':Index}"
-        >
+        <div id="newchat-searchbar" class="bg-white flex flex-col rounded-[3rem] rounded-bl-none overflow-hidden pb-6"
+            :class="{ 'rounded-br-none': Index }">
             <div class="bg-white flex justify-between">
                 <div class="border-[2px] border-dashed border-gray-300 rounded-[2rem] m-3 w-full flex">
                     <div @click="isNewChatOpen = true"
@@ -26,34 +49,8 @@
             </div>
         </div>
         <div id="chatheads" class=" h-[550px] overflow-scroll ">
-            <chat-list :conversations="conversations" @select="selection" :si="selectedIndex"></chat-list>
+            <chat-list :conversations="conversations" :si="selectedIndex" :me="me" @select="selection"></chat-list>
         </div>
-        <contacts-list @close="isNewChatOpen = false" v-if="isNewChatOpen" :users="users" > </contacts-list>
+        <contacts-list @close="isNewChatOpen = false" v-if="isNewChatOpen" :users="users"> </contacts-list>
     </div>
 </template>
-
-<script setup>
-import ChatList from '@/views/Chatlist.vue'
-import ContactsList from '@/views/ContactsList.vue'
-import { ref } from 'vue';
-const props = defineProps({
-    conversations: Object,
-    index: Number,
-    users: Object,
-})
-const Index = ref(100);
-const selectedIndex = ref(1000);
-
-const selection = (conv,i) => {
-    selectedIndex.value = i; 
-    emit('select', conv,i);
-    Index.value = i;
-
-}
-
-const emit = defineEmits(['select'])
-
-const isNewChatOpen = ref(false);
-
-
-</script>

@@ -1,3 +1,26 @@
+<script setup>
+import { useRouter } from "vue-router";
+import http from "@/helpers/http";
+
+const router = useRouter();
+
+const logout = async () => {
+  let storedEmail = JSON.parse(localStorage.getItem("user"));
+  storedEmail = storedEmail.email;
+  try {
+    await http.post('/auth/logout', { email: storedEmail }).then((res) => {
+      console.log(res.data);
+    });
+  } catch (e) {
+    console.log(e);
+    localStorage.clear();
+    router.push('/login')
+  }
+  localStorage.removeItem('accessToken')
+  router.push('/login')
+}
+</script>
+
 <template>
   <div id="navigation" class=" h-full rounded-[4rem] flex flex-col justify-between ">
     <div id="logo" class="w-20 m-5">
@@ -28,36 +51,9 @@
           <path d="M512 32c-17.6 0-32 14.4-32 32v448c0 17.6 14.4 32 32 32s32-14.4 32-32V64c0-17.6-14.4-32-32-32z"
             fill="#fff" />
         </svg>
-
         <!-- <img src="@/assets/settings.png" alt=""> -->
       </div>
     </div>
     <div id="nav-foot"></div>
     <div id="nav-foot2"></div>
-  </div>
-</template>
-
-<script setup>
-import { useRouter } from "vue-router";
-import http from "@/helpers/http";
-const router = useRouter();
-const logout = async () => {
-  let storedEmail = JSON.parse(localStorage.getItem("user"));
-  storedEmail = storedEmail.email;
-  try {  await http.post('/auth/logout', { email: storedEmail }).then((res) => {
-      console.log(res.data);
-    }); 
-  } catch (e) {
-    console.log(e);
-    // localStorage.clear();
-    // if(e.response.data.message)
-    // errorMsg.value = e.response.data.message;
-  }
-  // finally {
-  //     isSubmitting.value = false
-  // }
-
-  localStorage.removeItem('accessToken')
-  router.push('/login')
-}
-</script>
+</div></template>

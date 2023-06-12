@@ -17,7 +17,6 @@ const router = createRouter({
       components: {
         default: LoginView,
         login: LoginView
-
       }
     },
     {
@@ -26,43 +25,36 @@ const router = createRouter({
       components: {
         default: LoginView,
         login: LoginView
-
       }
     }
   ]
 })
 
+// Middleware
 router.beforeEach(async (to, from, next) => {
-  try { 
+  try {
     if (JSON.parse(localStorage.getItem("user")) && localStorage.getItem("accessToken")) {
       let u = JSON.parse(localStorage.getItem("user"));
       if (u.email) {
         let storedEmail = await JSON.parse(localStorage.getItem("user"));
         storedEmail = storedEmail.email;
-
         if (localStorage.getItem("accessToken")) {
           await http.get('/auth/me', { email: storedEmail }).then((res) => {
-                    if (to.name == "login") {
-                      router.push({ name: "home" });
-                    } 
-
+            if (to.name == "login") {
+              router.push({ name: "home" });
+            }
           })
         }
       }
     } else
-      if (to.name != "login" || to ==null)
+      if (to.name != "login" || to == null)
         router.push({ name: "login" });
-    //     else
     next();
   } catch (e) {
-      if (to.name != "login")
-        router.push({ name: "login" });
-
+    if (to.name != "login")
+      router.push({ name: "login" });
     next();
   }
-  // }
-
 });
 
-// window.vueRouter = router;
 export default router

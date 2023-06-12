@@ -1,6 +1,6 @@
 <!-- src/App.vue -->
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from 'vue-router';
 
 </script>
 <template>
@@ -8,105 +8,4 @@ import { RouterLink, RouterView } from 'vue-router';
   <RouterView>
 
   </RouterView>
-  <!-- <router-view class="view home" name="HomeView"></router-view>
-<RouterView class="view login" name="LoginView"></RouterView> -->
 </template>
-<style >
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Roboto;
-}
-
-#chatheads::-webkit-scrollbar {
-  display: none;
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
-input:focus {
-  /* outline:#00BFA6; */
-  outline-color: #9391da;
-}
-
-#nav>div>img {
-  width: 60px;
-}
-
-#nav>div {
-  padding: 10px 0;
-  text-align: -webkit-center;
-}
-
-#nav>div:hover {
-  border-left: 10px solid #dcdae6;
-}
-
-#nav {
-  text-align: center;
-}
-
-.conv-head {
-  cursor: pointer; 
-}
-
-.conv-head:hover {
-  background-color: #dcdae600;
-  border-left: 5px solid #da74a8;
-}
-
-.hov {
-  background-color: #dcdae600;
-  border-left: 5px solid #da74a8;
-}
-
-#conversations::-webkit-scrollbar {
-  display: none;
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
-#contactlist::-webkit-scrollbar {
-  display: none;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.list::-webkit-scrollbar {
-  display: none;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.arrow {
-  border: solid black;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-}
-
-.right {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-}
-
-.left {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
-}
-
-.up {
-  transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
-}
-
-.down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-}
-</style>

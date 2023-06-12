@@ -1,24 +1,10 @@
 <script setup>
 import { onMounted, ref, nextTick, reactive } from 'vue'
-
 import { useRouter } from "vue-router";
 import http from "@/helpers/http";
-// import { useI18n } from 'vue-i18n'
-// import { useToast } from 'vue-toastification'
-// import { useField, useForm } from 'vee-validate'
-
-// const { t } = useI18n()
-// const toast = useToast()
-// const { handleSubmit } = useForm()
-// const name = useField('name')
-// const email = useField('email')
-// const password = useField('password')
-// const password_confirmation = useField('password_confirmation')
 
 const router = useRouter();
 const errorMsg = ref('');
-const isSubmitting = ref(false)
-const isSubmitted = ref(false)
 const isLogin = ref(true)
 const s_u_name = ref('Ahmed')
 const s_u_email = ref('a@b.c')
@@ -26,22 +12,21 @@ const s_u_password = ref('1234')
 const s_i_email = ref('a@b.c')
 const s_i_password = ref('1234')
 
+
 const slide_signin = () => {
     isLogin.value = !isLogin.value;
-
     // if (isLogin.value)
-    //     window.location.replace('/login')
+    // window.location.replace('/login')
     // else
     // window.location.replace('/signup')
-
 }
+
 const signup = async () => {
     errorMsg.value = null;
     if (!s_u_name.value || !s_u_email.value || !s_u_password.value) {
         errorMsg.value = "Please fill all fields"
         return;
     }
-
     try {
         const { data } = await http.post('/auth/signup', {
             name: s_u_name.value,
@@ -57,33 +42,33 @@ const signup = async () => {
         // errorMsg.value = e.response.data.message;
     }
     // finally {
-    //     isSubmitting.value = false
+    // isSubmitting.value = false
     // }
 }
+
 const signin = async () => {
     errorMsg.value = null;
     if (!s_i_email.value || !s_i_password.value) {
         errorMsg.value = "Please fill all fields"
         return;
     }
-
     try {
         const { data } = await http.post('/auth/login', {
-            
             email: s_i_email.value,
             password: s_i_password.value
-        }) 
+        })
         localStorage.setItem("accessToken", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-
         router.push({ name: "home" });
-
     } catch (e) {
         console.log(e);
         if (e.response.data.message)
             errorMsg.value = e.response.data.message;
     }
 }
+
+// maybe this fanction can be deleted 
+// because thier is a Middleware in router (beforeEach) doing its job
 const refresh = async () => {
     try {
         let storedEmail = JSON.parse(localStorage.getItem("user"));
@@ -103,13 +88,12 @@ onMounted(() => {
     refresh();
 })
 </script>
-
 <template>
     <div id="modal" class="flex justify-center items-center h-screen w-full bg-black bg-opacity-10 ">
         <div id="login-modal"
             class="select-none w-[900px] h-[600px] relative border-0 border-solid border-red-700 rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 ease-in-out transform bg-blue-600 ">
             <div id="signin-front"
-                class="pt-20 bg-white absolute h-full z-10 transition-all duration-1000 ease-in-out text-center left-0   overflow-hidden"
+                class="pt-20 bg-white absolute h-full z-10 transition-all duration-1000 ease-in-out text-center left-0 overflow-hidden"
                 :class="{ 'w-[60%] ': isLogin, 'w-0': !isLogin }">
                 <div class="w-[540px] relative transition-all duration-1000 ease-in-out right-0"
                     :class="{ 'right-[0%] ': isLogin, 'right-[-1080px]': !isLogin }">
@@ -122,7 +106,6 @@ onMounted(() => {
                                 class="w-8" /></a>
                         <a href="/login/github"><img src="https://img.icons8.com/fluent/48/000000/github.png"
                                 class="w-8" /></a>
-
                     </div>
                     <p class="text-sm text-black">Or Use Your Email Account</p>
                     <div class="inputs">
@@ -133,7 +116,7 @@ onMounted(() => {
                             <input id="password" type="password" v-model="s_i_password"
                                 class=" px-4 py-4 m-1 w-[85%] border-solid border-2 border-gray-100 text-center"
                                 name="password" required placeholder="Password">
-                            <span class="block  text-red-500 font-bold" v-text="`${errorMsg}${' .'}`" role="alert"
+                            <span class="block text-red-500 font-bold" v-text="`${errorMsg}${' .'}`" role="alert"
                                 :class="{ 'opacity-0': !errorMsg, 'opacity-100': errorMsg }" />
                             <div class="form-check">
                                 <input class="form-check-input m-1" type="checkbox" name="remember" id="remember">
@@ -150,7 +133,6 @@ onMounted(() => {
             </div>
             <div id="signin-back" class="w-[40%] flex items-center justify-center">
                 <div class="text-white pt-[41%] m-[18%] bg-transparent text-center">
-                    <!-- <h1>Welcome Back!</h1> -->
                     <p>To Keep Connected with us </p>
                     <p>Please login with your personal info</p>
                 </div>
@@ -169,16 +151,14 @@ onMounted(() => {
                 class=" w-[40%] h-full text-white text-center z-30 absolute top-0 transition-all duration-1000 ease-in-out"
                 :class="{ 'right-[0] ': isLogin, 'right-[60%]': !isLogin }">
                 <div @click="slide_signin"
-                    class="  w-[57%] m-auto mt-[102%] relative h-12 border-solid border-2 border-white rounded-full cursor-pointer p-[3%]">
+                    class=" w-[57%] m-auto mt-[102%] relative h-12 border-solid border-2 border-white rounded-full cursor-pointer p-[3%]">
                     <div v-if="isLogin">to SIGN UP</div>
                     <div v-else>to SIGN IN</div>
                 </div>
             </div>
             <div id="signup-front"
-                class=" flex flex-col max-w-xl absolute h-full z-10 transition-all duration-1000 ease-in-out text-center  w-full overflow-hidden bg-white"
-                style="       
-            padding-top: 9%;
-            " :class="{ 'right-[-80%] ': isLogin, 'right-[0%]': !isLogin }">
+                class=" flex flex-col max-w-xl absolute h-full z-10 transition-all duration-1000 ease-in-out text-center w-full overflow-hidden bg-white"
+                style="padding-top: 9%;" :class="{ 'right-[-80%] ': isLogin, 'right-[0%]': !isLogin }">
                 <div class=" absolute w-full transition-all duration-1000 ease-in-out"
                     :class="{ 'left-[-1080px] ': isLogin, 'left-[0%]': !isLogin }">
                     <h1 class="text-center font-bold text-4xl text-sky-600 mb-9" style=" letter-spacing: -1px; ">Create
@@ -192,12 +172,10 @@ onMounted(() => {
                                 class="w-8" /></a>
                         <a href="/login/github"><img src="https://img.icons8.com/fluent/48/000000/github.png"
                                 class="w-8" /></a>
-
                     </div>
                     <p>Or use Your E-Mail for Registeration</p>
                     <div class="inputs ">
                         <form action="/" method="post" autocomplete="off" class="flex flex-col justify-center items-center">
-
                             <input v-model="s_u_name"
                                 class=" px-4 py-4 m-1 w-[85%] border-solid border-2 border-gray-100 text-center" type="text"
                                 name="name" placeholder="Your Name">
@@ -217,10 +195,9 @@ onMounted(() => {
         </div>
     </div>
 </template>
+<style scoped> 
 
-
-
-<style scoped> #signup-front div .inputs {
+#signup-front div .inputs {
      left: 0;
  }
 
@@ -248,9 +225,6 @@ onMounted(() => {
  #signup-back div h1 {
      color: white !important;
  }
-
-
-
 
  .button:before {
      content: "";
@@ -307,12 +281,6 @@ onMounted(() => {
      border-radius: 50%;
      border: 1px solid #ced8d9;
  }
-
-
-
-
-
-
 
  .navbar {
      background-image: linear-gradient(141deg, rgb(28, 130, 226) 57%, rgb(28, 125, 217) 15%);
